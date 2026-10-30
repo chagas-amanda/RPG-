@@ -3,14 +3,14 @@
 #include <string.h>
 #include <time.h>
 
-// Estrutura para os Itens do Inventário
+
 typedef struct {
     char nome[50];
-    int tipo_efeito; // 1: Cura, 2: Ataque/Defesa
+    int tipo_efeito; 
     int valor;
 } Item;
 
-// Estrutura para o Personagem
+
 typedef struct {
     char nome[100];
     int hp;
@@ -19,21 +19,21 @@ typedef struct {
     int qtd_itens;
 } Personagem;
 
-// Estrutura para a Sala
+
 typedef struct Sala {
     int id;
-    int tipo; // 1: Monstro, 2: Tesouro, 3: Armadilha
+    int tipo; 
     struct Sala *proxima;
 } Sala;
 
-// Função para criar uma sala dinamicamente
+
 Sala *criar_sala(int id) {
     Sala *nova = malloc(sizeof(Sala));
     nova->id = id;
     nova->proxima = NULL;
 
     if (id == 7) {
-        nova->tipo = 1; // Chefe final na última sala
+        nova->tipo = 1;
     }
     else {
         nova->tipo = rand() % 3 + 1;
@@ -41,7 +41,7 @@ Sala *criar_sala(int id) {
     return nova;
 }
 
-// Função para liberar a masmorra
+
 void liberar_masmorra(Sala *atual) {
     while (atual != NULL) {
         Sala *proxima = atual->proxima;
@@ -50,7 +50,6 @@ void liberar_masmorra(Sala *atual) {
     }
 }
 
-// Função para usar item
 void usar_item(Personagem *heroi, int indice) {
     Item item = heroi->inventario[indice];
     if (item.tipo_efeito == 1) {
@@ -94,7 +93,7 @@ int main() {
     int escolha;
     scanf("%d", &escolha);
 
-    // Definindo nome e atributos baseados no RPG original
+   
     if (escolha == 1) {
         strcpy(heroi.nome, "LeirbaG Bigode");
         heroi.hp = 90;
@@ -116,7 +115,7 @@ int main() {
            heroi.hp,
            heroi.ataque);
 
-    // Cria a primeira sala
+  
     Sala *inicio = criar_sala(1);
     Sala *atual = inicio;
 
@@ -163,7 +162,7 @@ int main() {
             break;
         }
 
-        // Salas de 1 a 6
+     
         if (atual->tipo == 1) {
             int dano = 20;
             printf("Um monstro apareceu e te atacou! (-20 HP)\n");
@@ -191,7 +190,7 @@ int main() {
             break;
         }
 
-        // Menu de Ações com a opção de fugir
+        
         printf("\nO que deseja fazer?\n");
         if (heroi.qtd_itens > 0) printf("[1] Usar item do inventario\n");
         printf("[2] Avancar para a proxima sala\n");
@@ -212,12 +211,12 @@ int main() {
             }
         }
         else if (acao == 3) {
-            // Opção de fuga solicitada
+            
             printf("\nVoce saiu correndo desesperadamente da masmorra e "
                    " nao sobreviveu para contar a historia! . . . Voce foi "
                    "derrotado pela sua covardia!\n");
 
-            // Limpa a memória antes de sair com return 0
+            /
             liberar_masmorra(inicio);
             if (heroi.inventario != NULL) free(heroi.inventario);
             return 0;
@@ -229,10 +228,10 @@ int main() {
         atual = atual->proxima;
     }
 
-    // Limpeza de memória dinâmica ao final normal do jogo
+    
     liberar_masmorra(inicio);
     if (heroi.inventario != NULL) free(heroi.inventario);
 
-    printf("\nAte a proxima!\n");
+    printf("\nAte a proxima! . . . se voce tiver coragem\n");
     return 0;
 }

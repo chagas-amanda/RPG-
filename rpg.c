@@ -216,7 +216,7 @@ int main() {
                    " nao sobreviveu para contar a historia! . . . Voce foi "
                    "derrotado pela sua covardia!\n");
 
-            /
+            
             liberar_masmorra(inicio);
             if (heroi.inventario != NULL) free(heroi.inventario);
             return 0;
